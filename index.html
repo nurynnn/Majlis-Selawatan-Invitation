@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>You're Invited — Interactive Digital Invitation</title>
+  <title>You're Invited — Invitation Majlis Selawatan</title>
   <meta name="description" content="A beautiful, interactive digital invitation. Tap the link to open, RSVP, add to calendar, view map, and share." />
   <meta property="og:title" content="You're Invited!" />
-  <meta property="og:description" content="Tap to open the interactive invitation." />
+  <meta property="og:description" content="Tap to Open Your Invitation" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://images.unsplash.com/photo-1529635677270-ecaa97e01f84?w=1200" />
   <meta name="theme-color" content="#5a67d8" />
@@ -61,9 +61,24 @@
     .btn.ghost{background:#ffffff0a; color:#e7e9ff; font-weight:600}
     .section{margin:24px 0}
     .h2{font-size:20px; letter-spacing:.04em; text-transform:uppercase; color:#cdd3ff; opacity:.9; margin:0 0 8px}
-    .info{display:grid; gap:12px}
-    .info-row{display:flex; gap:10px; align-items:start}
-    .info .label{font-weight:700; color:#cfd5ff}
+
+  .info-row {
+  display: flex;
+  align-items: flex-start; /* top-align long text */
+  margin-bottom: 8px;
+}
+
+.info-row .label {
+  width: 100px;  /* fixed column for labels */
+  font-weight: bold;
+  color: #cfd5ff;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+.info-row span {
+  flex: 1; /* details take remaining space */
+}
+
     .countdown{display:flex; justify-content:center; gap:14px; margin-top:18px}
     .timebox{min-width:68px; text-align:center; padding:10px 8px; border-radius:14px; background:#0e1430; border:1px solid #ffffff14}
     .timebox .num{font-size:28px; font-weight:800}
@@ -135,7 +150,7 @@
 
 .timeline-item .time {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   min-width: 80px;
   color: #f9c74f; /* yellow highlight for time */
 }
@@ -144,19 +159,81 @@
   font-size: 1rem;
 }
 
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px; /* star area */
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .star {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: rgb(255, 251, 0);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(150px); /* falls down */
+      opacity: 0;
+    }
+  }
+</style>
+
+<div class="stars"></div>
+
+<script>
+  const starsContainer = document.querySelector(".stars");
+
+  function createStar() {
+    const star = document.createElement("div");
+    star.className = "star";
+
+    // random X position
+    star.style.left = Math.random() * 100 + "%";
+
+    // random animation speed
+    const duration = Math.random() * 3 + 2; // 2s–5s
+    star.style.animationDuration = duration + "s";
+
+    starsContainer.appendChild(star);
+
+    // remove after animation ends
+    setTimeout(() => {
+      star.remove();
+    }, duration * 1000);
+  }
+
+  // continuously add falling stars
+  setInterval(createStar, 200); // every 0.2s
+</script>
+
 
 
   </style>
 </head>
 <body>
 <canvas id="confetti"></canvas>
-<div class="music"><button id="musicBtn" aria-pressed="false">♪ Music: Off</button><audio id="bgm" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9c6a8039a3.mp3?filename=relaxing-ambient-110241.mp3"></audio></div>
+<div class="music"><button id="musicBtn" aria-pressed="false">♪ Music: Off</button><audio id="bgm" loop src="videoplayback.mp3"></audio></div>
   <header class="hero max">
     <div class="sparkle" aria-hidden="true"></div>
     <div class="title">
       <span class="pill">You're Invited</span>
-      <h1 id="eventTitle">Aisyah & Hafiz — Wedding Reception</h1>
-      <p id="eventTag">Join us for an evening of joy, food and celebration.</p>
+          <h1 id="eventTitle">Majlis Salawatan Untaian Rindu Rasulullah -\npimpinan Ustazah Madihah Ishak</h1>
+      <p id="eventTag">Jemputan istimewa buat muslimat sekalian,bagi menambah seri, mengikat ukhuwah, dan menyuburkan roh kebersamaan dalam majlis ini. </p>
+
       <div class="countdown" id="countdown" aria-live="polite"></div>
     </div>
   </header>
@@ -194,7 +271,7 @@
           </div>
           <div class="timeline-item">
             <div class="time"></div>
-            <div class="activity">Ratib Al-Attas</div>
+            <div class="activity">Ratib Al-Attos</div>
           </div>
           <div class="timeline-item">
             <div class="time"></div>
@@ -208,32 +285,33 @@
             <div class="time"></div>
             <div class="activity">Selawat Thobibiyah</div>
           </div>
+        
           <div class="timeline-item">
             <div class="time"></div>
-            <div class="activity">Selawat Tafrijiyyah</div>
-          </div>
-          <div class="timeline-item">
-            <div class="time"></div>
-            <div class="activity">Rasulullah</div>
+            <div class="activity">Nasyid Rasulullah</div>
           </div>
           <div class="timeline-item">
             <div class="time"></div>
             <div class="activity">Marhaban Ya Rabi'</div>
+          </div>
+           <div class="timeline-item">
+            <div class="time"></div>
+            <div class="activity">Salatullah Salamullah</div>
           </div>
           <div class="timeline-item">
             <div class="time">9:30 AM</div>
             <div class="activity">Tazkirah</div>
           </div>
           <div class="timeline-item">
-            <div class="time">10:15 AM</div>
+            <div class="time">10:20 AM</div>
             <div class="activity">Bangun Selawat & Pembahagian Bunga Telur</div>
           </div>
           <div class="timeline-item">
-            <div class="time">10:20 AM</div>
+            <div class="time">10:25 AM</div>
             <div class="activity">Doa & Penutup Majlis daripada Ustazah Madihah</div>
           </div>
           <div class="timeline-item">
-            <div class="time"></div>
+            <div class="time">10:30 AM</div>
             <div class="activity">Berdiri Selawat & Bersurai</div>
           </div>
         </div>
@@ -260,7 +338,7 @@
   </main>
 
   <footer class="max">
-    <div>Made with ❤ — Siti Azhari</div>
+    <div>Made by — Siti Azhari</div>
   </footer>
 
 
@@ -269,17 +347,23 @@
 // QUICK SETTINGS — EDIT THESE
 // =============================
 const settings = {
-  title: "Majlis Salawatan Untaian Rindu Rasulullah -\npimpinan Ustazah Madihah Ishak",
+  title: "Majlis Salawatan Untaian Rindu Rasulullah -pimpinan Ustazah Madihah Ishak",
   tagline: "Jemputan istimewa buat muslimat sekalian,bagi menambah seri, mengikat ukhuwah, dan menyuburkan roh kebersamaan dalam majlis ini. ",
-  venue: "Grand Ballroom, Putrajaya",
-  mapsQuery: "Grand Ballroom, Putrajaya",
-  start: new Date("2025-09-01T19:30:00+08:00"), // Asia/Kuala_Lumpur time
-  end:   new Date("2025-09-01T22:30:00+08:00"),
+   venue: "Surau At-Taqwa Taman Telipot Bukit Sentosa",
+   mapsQuery: "Surau At-Taqwa Taman Telipot Bukit Sentosa",
+   start: new Date("2025-09-02T08:00:00+08:00"), // Event day morning
+end:   new Date("2025-09-02T10:30:00+08:00"),
+
 
   coverImages: [
-    "Artboard 2.png",
-    "Artboard 1.png",
     "Artboard 3.png",
+    "Artboard 2.png",
+    "Artboard 10.png",
+    "Artboard 1.png",
+    "Artboard 5.png",
+    "Artboard 6.png",
+    "Artboard 7.png",
+    "Artboard 8.png",
     "Artboard 4.png"
 
   ],
@@ -322,50 +406,40 @@ document.getElementById('next').onclick = ()=> show(idx+1);
 drawDots();
 
 
-
-// Confetti (lightweight)
-const confetti = document.getElementById('confetti');
-const ctx = confetti.getContext('2d');
-let particles = []; let raf;
-function resize(){ confetti.width = innerWidth; confetti.height = innerHeight }
-addEventListener('resize', resize); resize();
-function celebrate(){
-  particles = Array.from({length:160}, () => ({
-    x: Math.random()*confetti.width,
-    y: -20 - Math.random()*40,
-    vx: (Math.random()-0.5)*2,
-    vy: 2 + Math.random()*3,
-    size: 6+Math.random()*6,
-    rot: Math.random()*Math.PI,
-    vr: (Math.random()-0.5)*0.2,
-    alpha: 1
-  }));
-  cancelAnimationFrame(raf); loop(); setTimeout(()=> cancelAnimationFrame(raf), 3500);
-}
-function loop(){
-  ctx.clearRect(0,0,confetti.width, confetti.height);
-  for(const p of particles){
-    p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.alpha -= 0.003;
-    ctx.save(); ctx.globalAlpha = Math.max(0,p.alpha);
-    ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-    ctx.fillStyle = ['#7c8cff','#ffb86b','#8be9fd','#f1fa8c','#50fa7b'][p.size|0 % 5];
-    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-    ctx.restore();
-  }
-  raf = requestAnimationFrame(loop);
-}
-
 // Music toggle
 const audio = document.getElementById('bgm');
 const musicBtn = document.getElementById('musicBtn');
 let playing = false;
+
 musicBtn.onclick = async ()=>{
   try{
-    if(!playing){ await audio.play(); musicBtn.textContent = '♪ Music: On'; musicBtn.setAttribute('aria-pressed','true'); }
-    else{ audio.pause(); musicBtn.textContent = '♪ Music: Off'; musicBtn.setAttribute('aria-pressed','false'); }
+    if(!playing){ 
+      await audio.play(); 
+      musicBtn.textContent = '♪ Music: On'; 
+      musicBtn.setAttribute('aria-pressed','true'); 
+    } else { 
+      audio.pause(); 
+      musicBtn.textContent = '♪ Music: Off'; 
+      musicBtn.setAttribute('aria-pressed','false'); 
+    }
     playing = !playing;
-  }catch(e){ alert('Tap the page once, then try again to enable audio.'); }
+  }catch(e){ 
+    alert('Tap the page once, then try again to enable audio.'); 
+  }
 };
+
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await audio.play();
+    musicBtn.textContent = '♪ Music: On';
+    musicBtn.setAttribute('aria-pressed','true');
+    playing = true;
+  } catch (e) {
+    // Autoplay blocked, fallback to waiting for user click
+    console.log("Autoplay blocked by browser, waiting for user interaction.");
+  }
+});
+
 
 </script>
 </body>
